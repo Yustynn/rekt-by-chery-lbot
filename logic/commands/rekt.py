@@ -7,6 +7,11 @@ from ..misc.config import INIT_HP, DEAD_MESSAGES, REKT_MESSAGES, SEVERITY_RANKIN
 from ..misc.helpers import build_people_menu, get_target_person
 from ..misc.get_hps import get_hps
 
+state = {
+    'message_id': None,
+    'chat_id': None
+}
+
 def build_severity_menu(person):
     rankings = choice(SEVERITY_RANKINGS)
     keyboard = [
@@ -17,23 +22,30 @@ def build_severity_menu(person):
 
 
 def rekt(bot, update):
-    bot.send_message(
+    message = bot.send_message(
         chat_id=update.message.chat_id,
         reply_markup=build_people_menu('rekt_who'),
         text="Who got rekt?"
     )
 
+    state['message_id'] = message.message_id
+    state['chat_id'] = message.chat_id
+
 def handle_rekt_who(bot, update):
     who = update.callback_query.data.replace('rekt_who/', '')
 
-    bot.send_message(
-        chat_id=update.callback_query.message.chat_id,
+    bot.edit_message_text(
+        chat_id=state['chat_id'],
+        message_id=state['message_id'],
+        text=f"How burnt did {who} get?"
+    )
+
+    bot.edit_message_reply_markup(
+        chat_id=state['chat_id'],
+        message_id=state['message_id'],
         reply_markup=build_severity_menu(who),
         text="How burnt?"
     )
-
-
-    print(bot.send_message)
 
 def handle_rekt_final(bot, update):
     who, severity = update.callback_query.data.split('/')[1:]
@@ -46,10 +58,11 @@ def handle_rekt_final(bot, update):
     if hp > 0:
         text += f'\n{who} has {hp}/{INIT_HP} HP left.'
     else:
-        text += '\n' + choice(DEAD_MESSAGES).replace('$NAME', who)
+        text += '\n\n' + choice(DEAD_MESSAGES).replace('$NAME', who)
 
-    bot.send_message(
-        chat_id=update.callback_query.message.chat_id,
+    bot.edit_message_text(
+        chat_id=state['chat_id'],
+        message_id=state['message_id'],
         text=text
     )
 
