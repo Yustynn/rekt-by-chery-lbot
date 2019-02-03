@@ -11,6 +11,7 @@ REKT_MESSAGES = [
     "$NAME, are you sure your name isn't Icarus? Cause you been burnt."
 ]
 
+# Currently unused
 DEAD_REKT_MESSAGES = [
     "Cheryl don't necro leh.",
     "And so dread empress Cheryl decided that death was not enough and began hacking $NAME's corpse to pieces."
@@ -22,6 +23,8 @@ SEVERITY_RANKINGS = [
     ('First Degree Burn', 'Second Degree Burn', 'Third Degree Burn'),
     ('Just a bit warm', 'Cigarette Burn', 'Offering to Dead Relatives')
 ]
+
+INIT_HP = 5
 
 PEOPLE = [
     'Cheryl',

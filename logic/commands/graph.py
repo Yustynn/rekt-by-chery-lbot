@@ -27,9 +27,9 @@ def graph(bot, update):
 def handle_graph_who(bot, update):
     who = update.callback_query.data.replace('graph_who/', '')
 
-    records = get_rekt_records(who)
+    records = get_rekt_records(who, fields=['severity'])
     xs = list(records.keys())
-    ys = [sum(rekts) for rekts in records.values()]
+    ys = [sum([r['severity'] for r in rekts]) for rekts in records.values()]
 
     fig, ax = plt.subplots()
 

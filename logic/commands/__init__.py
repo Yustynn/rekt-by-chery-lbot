@@ -1,5 +1,6 @@
 from telegram.ext import CallbackQueryHandler, CommandHandler
 from .graph import graph, graph_callbacks
+from .hp import hp
 from .rekt import rekt, rekt_callbacks
 from .start import start
 from ..updater import dispatcher
@@ -17,6 +18,7 @@ def register_command(name, f):
 
 
 register_command('start', start)
+register_command('hp', hp)
 register_command('graph', graph)
 register_command('rekt', rekt)
 

@@ -3,8 +3,9 @@ from random import choice
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 
 from ..db.db import record_rekt
-from ..misc.config import REKT_MESSAGES, SEVERITY_RANKINGS
+from ..misc.config import INIT_HP, DEAD_MESSAGES, REKT_MESSAGES, SEVERITY_RANKINGS
 from ..misc.helpers import build_people_menu, get_target_person
+from ..misc.get_hps import get_hps
 
 def build_severity_menu(person):
     rankings = choice(SEVERITY_RANKINGS)
@@ -39,10 +40,17 @@ def handle_rekt_final(bot, update):
     severity = int(severity)
 
     record_rekt(who, severity)
+    hp = get_hps()[who]
+
+    text = choice(REKT_MESSAGES).replace('$NAME', who)
+    if hp > 0:
+        text += f'\n{who} has {hp}/{INIT_HP} HP left.'
+    else:
+        text += '\n' + choice(DEAD_MESSAGES).replace('$NAME', who)
 
     bot.send_message(
         chat_id=update.callback_query.message.chat_id,
-        text=choice(REKT_MESSAGES).replace('$NAME', who)
+        text=text
     )
 
 rekt_callbacks = [

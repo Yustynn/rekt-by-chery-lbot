@@ -10,7 +10,6 @@ def build_people_menu(callback_prepend):
 
     return InlineKeyboardMarkup(keyboard)
 
-
 def get_target_person(update):
     text = ' '.join(
         update.message.text.split(' ')[1:]

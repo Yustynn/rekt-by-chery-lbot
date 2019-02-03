@@ -28,7 +28,7 @@ def record_rekt(who, severity):
     print(f'Recorded {who} at {datetime.now()}')
     print(collection.find()[0])
 
-def get_rekt_records(who=None, num_days=5):
+def get_rekt_records(who=None, num_days=5, fields=None):
     start = localize_datetime(datetime.now().replace(hour=0, minute=0)) - timedelta(days=num_days-1)
 
     query = {'timestamp': {'$gt': start}}
@@ -37,10 +37,14 @@ def get_rekt_records(who=None, num_days=5):
         query['who'] = who
 
     docs = collection.find(query)
-    rekts_by_date = {to_datestring(start + timedelta(days=i)): [] for i in range(num_days)}
+    records_by_date = {to_datestring(start + timedelta(days=i)): [] for i in range(num_days)}
 
     for doc in docs:
         date = to_datestring(doc['timestamp'])
-        rekts_by_date[date].append(doc['severity'])
+        if fields is None:
+            record = doc
+        else:
+            record = {field: doc[field] for field in fields}
+        records_by_date[date].append(record)
 
-    return rekts_by_date
+    return records_by_date
