@@ -1,24 +1,10 @@
-from ..db.db import record_rekt
-from ..misc.config import PEOPLE
-from ..misc.helpers import get_target_person
+from random import choice
 
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 
-# def rekt(bot, update):
-#     target_person = get_target_person(update)
-
-#     if target_person:
-#         record_rekt(target_person)
-#         response = f'{target_person} got rekt'
-
-#     else:
-#         response = 'who?'
-
-#     bot.send_message(
-#         chat_id=update.message.chat_id,
-#         text=response
-#     )
-
+from ..db.db import record_rekt
+from ..misc.config import PEOPLE, REKT_MESSAGES
+from ..misc.helpers import get_target_person
 
 def people_menu():
     keyboard = [
@@ -42,4 +28,21 @@ def rekt(bot, update):
         text="Who got rekt?"
     )
 
-# updater.dispatcher.add_handler(CallbackQueryHandler(main_menu, pattern='main'))
+    print('\n\n\n', update.message.chat_id, '\n\n\n')
+
+def handle_rekt(bot, update):
+    print(f'handling rekt, {update.callback_query.data}')
+    who = update.callback_query.data.replace('rekt/', '')
+    print(who)
+    record_rekt(who, 1)
+    print()
+
+    print(bot.send_message)
+    bot.send_message(
+        chat_id=update.callback_query.message.chat_id,
+        text=choice(REKT_MESSAGES).replace('$NAME', who)
+    )
+
+rekt_callbacks = [
+    (handle_rekt, r'rekt/.+')
+]
