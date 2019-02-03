@@ -1,5 +1,11 @@
 import sys
 
+CRITICAL_HIT_CHANCE = 0.2
+CRITICAL_HIT_MULTIPLIER = 2
+DAMAGE_MULTIPLIER = 10
+INIT_HP = 40
+
+
 DEAD_MESSAGES = [
     "What's this? $NAME is evolving... $NAME evolved into. No. No wait. $NAME is dead. Sorry.",
     "Hey $NAME, remember when you used to be alive?",
@@ -14,7 +20,6 @@ REKT_MESSAGES = [
     "$NAME, if laughter is the best medicine, your face must be curing the world."
 ]
 
-# Currently unused
 DEAD_REKT_MESSAGES = [
     "Cheryl don't necro leh.",
     "And so dread empress Cheryl decided that death was not enough and began hacking $NAME's corpse to pieces."
@@ -26,9 +31,6 @@ SEVERITY_RANKINGS = [
     ('First Degree Burn', 'Second degree burn', 'Third degree burn'),
     ('Just a bit warm', 'Cigarette burn', 'Offering to dead relatives')
 ]
-
-INIT_HP = 40
-DAMAGE_MULTIPLIER = 10
 
 PEOPLE = [
     'Cheryl',

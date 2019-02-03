@@ -1,9 +1,9 @@
-from random import choice
-
+from random import choice, random
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 
 from ..db.db import record_rekt
-from ..misc.config import INIT_HP, DEAD_MESSAGES, REKT_MESSAGES, SEVERITY_RANKINGS
+from ..misc.config import CRITICAL_HIT_CHANCE, CRITICAL_HIT_MULTIPLIER, DEAD_MESSAGES, \
+    DAMAGE_MULTIPLIER, DEAD_REKT_MESSAGES, INIT_HP, REKT_MESSAGES, SEVERITY_RANKINGS
 from ..misc.helpers import build_people_menu, get_target_person
 from ..misc.get_hps import get_hps
 
@@ -51,14 +51,28 @@ def handle_rekt_final(bot, update):
     who, severity = update.callback_query.data.split('/')[1:]
     severity = int(severity)
 
+    is_critical = random() < CRITICAL_HIT_CHANCE
+
+    if is_critical:
+        severity *= CRITICAL_HIT_MULTIPLIER
+
+    old_hp = get_hps()[who]
     record_rekt(who, severity)
-    hp = get_hps()[who]
+    new_hp = old_hp - severity * DAMAGE_MULTIPLIER
+
+    is_newly_dead = old_hp > 0 and new_hp <= 0
 
     text = choice(REKT_MESSAGES).replace('$NAME', who)
-    if hp > 0:
-        text += f'\n{who} has {hp}/{INIT_HP} HP left.'
-    else:
+    if is_critical:
+        text += f'\n\nCritical Hit! Damage multiplied by {CRITICAL_HIT_MULTIPLIER}'
+
+    text += f'\n\n{who} has {max(new_hp, 0)}/{INIT_HP} HP left.'
+
+    if is_newly_dead:
         text += '\n\n' + choice(DEAD_MESSAGES).replace('$NAME', who)
+    else:
+        text += f' {who} was already dead.'
+        text += '\n\n' + choice(DEAD_REKT_MESSAGES).replace('$NAME', who)
 
     bot.edit_message_text(
         chat_id=state['chat_id'],
