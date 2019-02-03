@@ -1,3 +1,3 @@
-from db import collection
+from .db import collection
 
 collection.delete_many({})

@@ -1,12 +1,15 @@
 import os
 
-from telegram.ext import Updater
+from logic.updater import updater
 
-from logic.misc.config import TOKEN
-from logic.commands import register_all_commands
+import logic.commands
+print('commands registered')
 
-updater = Updater(token=TOKEN)
-dispatcher = updater.dispatcher
+print('clearing db...')
+import logic.db.cleardb
+print('done')
+print('seeding db...')
+import logic.db.seed
+print('done')
 
-register_all_commands(dispatcher)
 updater.start_polling()

@@ -10,7 +10,7 @@ def graph(bot, update):
 
     records = get_rekt_records(target_person)
     xs = list(records.keys())
-    ys = [len(ls) for ls in records.values()]
+    ys = [sum(rekts) for rekts in records.values()]
 
     fig, ax = plt.subplots()
     ax.plot(xs, ys)

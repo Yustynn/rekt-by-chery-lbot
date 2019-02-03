@@ -8,7 +8,7 @@ def get_target_person(update):
 
     who = text.strip()
 
-    matches = [person for person in PEOPLE if person.startswith(who.lower())]
+    matches = [person for person in PEOPLE if person.startswith(who)]
 
     if not matches or who is '' or len(matches) > 1:
         return ''

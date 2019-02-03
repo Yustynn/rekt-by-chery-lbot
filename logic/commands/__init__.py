@@ -2,13 +2,13 @@ from telegram.ext import CommandHandler
 from .graph import graph
 from .rekt import rekt
 from .start import start
+from ..updater import dispatcher
 
-def register_all_commands(dispatcher):
-    def register(name, f):
-        dispatcher.add_handler(
-            CommandHandler(name, f)
-        )
+def register_command(name, f):
+    dispatcher.add_handler(
+        CommandHandler(name, f)
+    )
 
-    register('start', start)
-    register('graph', graph)
-    register('rekt', rekt)
+register_command('start', start)
+register_command('graph', graph)
+register_command('rekt', rekt)
