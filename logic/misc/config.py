@@ -3,12 +3,15 @@ import sys
 DEAD_MESSAGES = [
     "What's this? $NAME is evolving... $NAME evolved into. No. No wait. $NAME is dead. Sorry.",
     "Hey $NAME, remember when you used to be alive?",
-    "I hope the dead person is Gabriel. Is it? It's $NAME. Is that Gabriel?"
+    "I hope the dead person is $NAME. Is it $NAME? It's $NAME."
 ]
 
 REKT_MESSAGES = [
-    "And thusly as dear $NAME was casually minding his own business did the powers of Cheryl scorch their flesh.",
-    "$NAME, are you sure your name isn't Icarus? Cause you been burnt."
+    "And thusly as dear $NAME was casually minding their own business did the powers of Cheryl scorch their flesh.",
+    "$NAME, are you sure your name isn't Icarus? Cause you been burnt.",
+    "$NAME got rekt! On an unrelated note, let's all take a moment to be grateful for how blessed we are to have Cheryl, the nicest person, be part of our Capstone group.",
+    "$NAME, it's better to let someone think you are an Idiot than to open your mouth and prove it.",
+    "$NAME, if laughter is the best medicine, your face must be curing the world."
 ]
 
 # Currently unused
@@ -18,10 +21,10 @@ DEAD_REKT_MESSAGES = [
 ]
 
 SEVERITY_RANKINGS = [
-    ('Rare', 'Medium-Well', 'Overcooked'),
-    ('Fried Chicken', 'Fried Fried Chicken', 'Fried Fried Fried Chicken'),
-    ('First Degree Burn', 'Second Degree Burn', 'Third Degree Burn'),
-    ('Just a bit warm', 'Cigarette Burn', 'Offering to Dead Relatives')
+    ('Rare', 'Medium-well', 'Overcooked'),
+    ('Fried chicken', 'Fried fried chicken', 'Fried fried fried chicken'),
+    ('First Degree Burn', 'Second degree burn', 'Third degree burn'),
+    ('Just a bit warm', 'Cigarette burn', 'Offering to dead relatives')
 ]
 
 INIT_HP = 5
