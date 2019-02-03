@@ -1,5 +1,15 @@
-from .config import PEOPLE
 from pytz import timezone
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup
+
+from .config import PEOPLE
+
+def build_people_menu(callback_prepend):
+    keyboard = [
+        [InlineKeyboardButton(person, callback_data=f'{callback_prepend}/{person}')] for person in PEOPLE
+    ]
+
+    return InlineKeyboardMarkup(keyboard)
+
 
 def get_target_person(update):
     text = ' '.join(

@@ -1,3 +1,5 @@
+import os
+
 import matplotlib.pyplot as plt
 
 from ..db.db import get_rekt_records
@@ -15,6 +17,8 @@ def graph(bot, update):
     fig, ax = plt.subplots()
     ax.plot(xs, ys)
     ax.set_title(f"{target_person}'s Weekly Wreckage")
+    ax.set_xlabel(f"Date")
+    ax.set_ylabel(f"Daily Wreckage")
     fig.savefig(GRAPH_PHOTO_PATH)
 
     photo = open(GRAPH_PHOTO_PATH, 'rb')

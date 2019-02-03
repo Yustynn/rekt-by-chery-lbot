@@ -3,19 +3,13 @@ from random import choice
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 
 from ..db.db import record_rekt
-from ..misc.config import PEOPLE, REKT_MESSAGES
-from ..misc.helpers import get_target_person
+from ..misc.config import REKT_MESSAGES, SEVERITY_RANKINGS
+from ..misc.helpers import build_people_menu, get_target_person
 
-def people_menu():
+def build_severity_menu(person):
+    rankings = choice(SEVERITY_RANKINGS)
     keyboard = [
-        [InlineKeyboardButton(person, callback_data=f'rekt/{person}')] for person in PEOPLE
-    ]
-
-    return InlineKeyboardMarkup(keyboard)
-
-def rekt_scale_menu():
-    keyboard = [
-        [i] for i in range(1, 4)
+        [InlineKeyboardButton(text, callback_data=f'rekt_final/{person}/{i+1}')] for i, text in enumerate(rankings)
     ]
 
     return InlineKeyboardMarkup(keyboard)
@@ -24,25 +18,34 @@ def rekt_scale_menu():
 def rekt(bot, update):
     bot.send_message(
         chat_id=update.message.chat_id,
-        reply_markup=people_menu(),
+        reply_markup=build_people_menu('rekt_who'),
         text="Who got rekt?"
     )
 
-    print('\n\n\n', update.message.chat_id, '\n\n\n')
+def handle_rekt_who(bot, update):
+    who = update.callback_query.data.replace('rekt_who/', '')
 
-def handle_rekt(bot, update):
-    print(f'handling rekt, {update.callback_query.data}')
-    who = update.callback_query.data.replace('rekt/', '')
-    print(who)
-    record_rekt(who, 1)
-    print()
+    bot.send_message(
+        chat_id=update.callback_query.message.chat_id,
+        reply_markup=build_severity_menu(who),
+        text="How burnt?"
+    )
+
 
     print(bot.send_message)
+
+def handle_rekt_final(bot, update):
+    who, severity = update.callback_query.data.split('/')[1:]
+    severity = int(severity)
+
+    record_rekt(who, severity)
+
     bot.send_message(
         chat_id=update.callback_query.message.chat_id,
         text=choice(REKT_MESSAGES).replace('$NAME', who)
     )
 
 rekt_callbacks = [
-    (handle_rekt, r'rekt/.+')
+    (handle_rekt_who, r'rekt_who/.+'),
+    (handle_rekt_final, r'rekt_final/.+')
 ]
