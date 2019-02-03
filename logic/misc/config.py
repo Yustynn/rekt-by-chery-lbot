@@ -27,7 +27,8 @@ SEVERITY_RANKINGS = [
     ('Just a bit warm', 'Cigarette burn', 'Offering to dead relatives')
 ]
 
-INIT_HP = 5
+INIT_HP = 40
+DAMAGE_MULTIPLIER = 10
 
 PEOPLE = [
     'Cheryl',

@@ -1,7 +1,7 @@
 from datetime import datetime
 
 from ..db.db import get_rekt_records
-from .config import INIT_HP, PEOPLE
+from .config import DAMAGE_MULTIPLIER, INIT_HP, PEOPLE
 from .helpers import to_datestring
 
 def get_hps():
@@ -12,6 +12,6 @@ def get_hps():
     today = to_datestring(datetime.now())
     for record in records[today]:
         print(record)
-        hps[record['who']] -= record['severity']
+        hps[record['who']] -= record['severity'] * DAMAGE_MULTIPLIER
 
     return hps
