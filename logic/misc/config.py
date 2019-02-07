@@ -1,5 +1,3 @@
-import sys
-
 CRITICAL_HIT_CHANCE = 0.2
 CRITICAL_HIT_MULTIPLIER = 2
 DAMAGE_MULTIPLIER = 10
@@ -22,17 +20,19 @@ REKT_MESSAGES = [
 
 DEAD_REKT_MESSAGES = [
     "Cheryl don't necro leh.",
-    "And so dread empress Cheryl decided that death was not enough and began hacking $NAME's corpse to pieces."
+    "Alas, death is no escape from Cheryl the Bitter.",
+    "May God take pity on your soul, for Cheryl will not."
 ]
 
 SEVERITY_RANKINGS = [
     ('Rare', 'Medium-well', 'Overcooked'),
     ('Fried chicken', 'Fried fried chicken', 'Fried fried fried chicken'),
-    ('First Degree Burn', 'Second degree burn', 'Third degree burn'),
+    ('First degree burn', 'Second degree burn', 'Third degree burn'),
     ('Just a bit warm', 'Cigarette burn', 'Offering to dead relatives')
 ]
 
 PEOPLE = [
+    'Bot',
     'Cheryl',
     'Gabriel',
     'Kady',
@@ -40,5 +40,3 @@ PEOPLE = [
     'Yos',
     'Yustynn'
 ]
-
-TOKEN = '694288013:AAFN4oN35zoE7oGB8Ixnyt9VChLvNnXbDKo'
