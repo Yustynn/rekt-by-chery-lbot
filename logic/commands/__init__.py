@@ -20,11 +20,11 @@ def register_command(name, f):
 
 
 register_command('start', start)
-register_command('cleardb', cleardb)
+register_command('cleardb_yp', cleardb)
 register_command('hp', hp)
 register_command('graph', graph)
 register_command('rekt', rekt)
-register_command('seeddb', seeddb)
+register_command('seeddb_yp', seeddb)
 
 register_callbacks(rekt_callbacks)
 register_callbacks(graph_callbacks)
