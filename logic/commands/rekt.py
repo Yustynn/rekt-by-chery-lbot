@@ -60,7 +60,9 @@ def handle_rekt_final(bot, update):
     record_rekt(who, severity)
     new_hp = old_hp - severity * DAMAGE_MULTIPLIER
 
-    is_newly_dead = old_hp > 0 and new_hp <= 0
+    is_dead = new_hp <= 0
+    is_newly_dead = old_hp > 0 and is_dead
+    print(old_hp, new_hp, is_newly_dead, '\n\n')
 
     text = choice(REKT_MESSAGES).replace('$NAME', who)
     if is_critical:
@@ -70,7 +72,7 @@ def handle_rekt_final(bot, update):
 
     if is_newly_dead:
         text += '\n\n' + choice(DEAD_MESSAGES).replace('$NAME', who)
-    else:
+    elif is_dead:
         text += f' {who} was already dead.'
         text += '\n\n' + choice(DEAD_REKT_MESSAGES).replace('$NAME', who)
 
