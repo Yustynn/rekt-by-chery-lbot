@@ -68,7 +68,7 @@ def handle_rekt_final(bot, update):
     if is_critical:
         text += f'\n\nCritical Hit! Damage multiplied by {CRITICAL_HIT_MULTIPLIER}'
 
-    text += f'\n\n{who} has {max(new_hp, 0)}/{INIT_HP} HP left.'
+    text += f'\n\n{who} has {new_hp}/{INIT_HP} HP left.'
 
     if is_newly_dead:
         text += '\n\n' + choice(DEAD_MESSAGES).replace('$NAME', who)
