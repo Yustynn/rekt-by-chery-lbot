@@ -9,7 +9,9 @@ from ..misc.get_hps import get_hps
 
 state = {
     'message_id': None,
-    'chat_id': None
+    'chat_id': None,
+    'who': None,
+    'by': None,
 }
 
 def build_severity_menu(person):
@@ -20,16 +22,32 @@ def build_severity_menu(person):
 
     return InlineKeyboardMarkup(keyboard)
 
-
 def rekt(bot, update):
     message = bot.send_message(
         chat_id=update.message.chat_id,
-        reply_markup=build_people_menu('rekt_who'),
-        text="Who got rekt?"
+        reply_markup=build_people_menu('rekt_by'),
+        text="Who was the wrecker?"
     )
 
     state['message_id'] = message.message_id
     state['chat_id'] = message.chat_id
+
+def handle_rekt_by(bot, update):
+    by = update.callback_query.data.replace('rekt_by/', '')
+    state['by'] = by
+
+    bot.edit_message_text(
+        chat_id=state['chat_id'],
+        message_id=state['message_id'],
+        text=f"Who did {by} wreck?"
+    )
+
+    bot.edit_message_reply_markup(
+        chat_id=state['chat_id'],
+        message_id=state['message_id'],
+        reply_markup=build_people_menu('rekt_who'),
+    )
+
 
 def handle_rekt_who(bot, update):
     who = update.callback_query.data.replace('rekt_who/', '')
@@ -49,6 +67,7 @@ def handle_rekt_who(bot, update):
 
 def handle_rekt_final(bot, update):
     who, severity = update.callback_query.data.split('/')[1:]
+    by = state['by']
     severity = int(severity)
 
     is_critical = random() < CRITICAL_HIT_CHANCE
@@ -57,7 +76,7 @@ def handle_rekt_final(bot, update):
         severity *= CRITICAL_HIT_MULTIPLIER
 
     old_hp = get_hps()[who]
-    record_rekt(who, severity)
+    record_rekt(who, by, severity)
     new_hp = old_hp - severity * DAMAGE_MULTIPLIER
 
     is_dead = new_hp <= 0
@@ -83,6 +102,7 @@ def handle_rekt_final(bot, update):
     )
 
 rekt_callbacks = [
+    (handle_rekt_by, r'rekt_by/.+'),
     (handle_rekt_who, r'rekt_who/.+'),
     (handle_rekt_final, r'rekt_final/.+')
 ]
