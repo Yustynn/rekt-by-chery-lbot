@@ -22,7 +22,7 @@ def graph(bot, update):
     bot.send_message(
         chat_id=update.message.chat_id,
         reply_markup=build_people_menu('graph_who'),
-        text="Graph who's wreckage?"
+        text="Graph whose wreckage?"
     )
 
 def handle_graph_who(bot, update):
