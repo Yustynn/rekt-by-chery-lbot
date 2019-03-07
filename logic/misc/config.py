@@ -19,8 +19,8 @@ REKT_MESSAGES = [
 ]
 
 DEAD_REKT_MESSAGES = [
-    "Cheryl don't necro leh.",
-    "Alas, death is no escape from Cheryl the Bitter.",
+    "Eh don't necro leh.",
+    "Alas, death is no escape.",
     "May God take pity on your soul, for Cheryl will not."
 ]
 
@@ -38,5 +38,8 @@ PEOPLE = [
     'Kady',
     'Tze How',
     'Yos',
-    'Yustynn'
+    'Yustynn',
+    'Hong Yee',
+    'Costas',
+    'Chris'
 ]
