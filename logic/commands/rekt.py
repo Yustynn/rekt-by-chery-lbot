@@ -6,6 +6,7 @@ from ..misc.config import CRITICAL_HIT_CHANCE, CRITICAL_HIT_MULTIPLIER, DEAD_MES
     DAMAGE_MULTIPLIER, DEAD_REKT_MESSAGES, INIT_HP, REKT_MESSAGES, SEVERITY_RANKINGS
 from ..misc.helpers import build_people_menu, get_target_person
 from ..misc.get_hps import get_hps
+from ..misc.insults import generate_insult
 
 state = {
     'message_id': None,
@@ -83,7 +84,7 @@ def handle_rekt_final(bot, update):
     is_newly_dead = old_hp > 0 and is_dead
     print(old_hp, new_hp, is_newly_dead, '\n\n')
 
-    text = choice(REKT_MESSAGES).replace('$NAME', who)
+    text = generate_insult().replace('$NAME', who) + f' You got rekt by {by}'
     if is_critical:
         text += f'\n\nCritical Hit! Damage multiplied by {CRITICAL_HIT_MULTIPLIER}'
 
