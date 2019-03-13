@@ -165,3 +165,7 @@ nouns = [
 def generate_insult():
     adj1, adj2, noun = [choice(words) for words in (adj1s, adj2s, nouns)]
     return f'$NAME, you {adj1} {adj2} {noun}!'
+
+def generate_anonymous_insult():
+    adj1, adj2, noun = [choice(words) for words in (adj1s, adj2s, nouns)]
+    return f'You {adj1} {adj2} {noun}!'

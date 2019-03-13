@@ -2,6 +2,7 @@ from telegram.ext import CallbackQueryHandler, CommandHandler
 from .cleardb import cleardb
 from .graph import graph, graph_callbacks
 from .hp import hp
+from .insult import insult
 from .rekt import rekt, rekt_callbacks
 from .seeddb import seeddb
 from .start import start
@@ -22,6 +23,7 @@ def register_command(name, f):
 register_command('start', start)
 register_command('cleardb_yp', cleardb)
 register_command('hp', hp)
+register_command('insult', insult)
 register_command('graph', graph)
 register_command('rekt', rekt)
 register_command('seeddb_yp', seeddb)
